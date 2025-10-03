@@ -72,4 +72,19 @@ export class AuthService {
       throw new UnauthorizedException(error.message || 'Login failed');
     }
   }
+
+  async getMe(payload: { email: string; userId: string }) {
+    try {
+      const user = await this.usersService.findByEmail(payload.email);
+      if (!user) throw new UnauthorizedException('User not found');
+      const plainUser = user.toObject();
+      const { password, ...result } = plainUser;
+      return {
+        message: 'Get me success',
+        user: result,
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Get me failed');
+    }
+  }
 }
