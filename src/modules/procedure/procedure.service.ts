@@ -16,7 +16,11 @@ export class ProcedureService {
   ) {}
 
   async getAll() {
-    return this.procedureModel.find().populate('createdBy', 'name');
+    const data = await this.procedureModel.find().populate('createdBy', 'name');
+    return {
+      message: 'Success',
+      data,
+    };
   }
 
   async create(procedureDto: ProcedureDto, user: any) {
