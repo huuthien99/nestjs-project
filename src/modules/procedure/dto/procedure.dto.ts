@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, MaxLength, MinLength } from 'class-validator';
 
 export class ProcedureDto {
   @Transform(({ value }) => value?.trim())
@@ -13,4 +13,10 @@ export class ProcedureDto {
   type: string;
 
   group: string;
+
+  @IsOptional()
+  nodes: any[];
+
+  @IsOptional()
+  edges: any[];
 }

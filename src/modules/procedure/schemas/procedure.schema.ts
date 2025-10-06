@@ -19,6 +19,11 @@ export class Procedure {
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   createdBy: Types.ObjectId;
+
+  @Prop({ type: Array, default: [] })
+  nodes: any[];
+  @Prop({ type: Array, default: [] })
+  edges: any[];
 }
 
 export const ProcedureSchema = SchemaFactory.createForClass(Procedure);
