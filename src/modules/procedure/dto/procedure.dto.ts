@@ -7,7 +7,6 @@ export class ProcedureDto {
   @MinLength(6)
   name: string;
 
-  @MinLength(6)
   @MaxLength(500)
   description: string;
 
