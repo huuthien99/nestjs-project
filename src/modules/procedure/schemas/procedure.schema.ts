@@ -14,7 +14,7 @@ export class Procedure {
   @Prop({ enum: ['code', 'diagram'], default: 'diagram' })
   type: string;
 
-  @Prop()
+  @Prop({ default: 'ungrouped' })
   group?: string;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
