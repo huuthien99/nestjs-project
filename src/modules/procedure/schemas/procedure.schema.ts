@@ -8,6 +8,15 @@ export class Procedure {
   @Prop({ required: true })
   name: string;
 
+  @Prop()
+  description?: string;
+
+  @Prop({ enum: ['code', 'diagram'], default: 'diagram' })
+  type: string;
+
+  @Prop()
+  group?: string;
+
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   createdBy: Types.ObjectId;
 }
