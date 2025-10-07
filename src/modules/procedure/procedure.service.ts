@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Procedure, ProcedureDocument } from './schemas/procedure.schema';
 import { ProcedureDto } from './dto/procedure.dto';
+import { QueryProcedureDto } from './dto/query.dto';
 
 @Injectable()
 export class ProcedureService {
@@ -15,11 +16,41 @@ export class ProcedureService {
     private procedureModel: Model<ProcedureDocument>,
   ) {}
 
-  async getAll() {
-    const data = await this.procedureModel.find().populate('createdBy', 'name');
+  async getAll(query: QueryProcedureDto) {
+    const { search, type, page = 1, limit = 10 } = query;
+
+    const filter: any = {};
+
+    if (search) {
+      filter.name = { $regex: search, $options: 'i' };
+    }
+
+    if (type) {
+      filter.type = type;
+    }
+
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const [data, total] = await Promise.all([
+      this.procedureModel
+        .find(filter)
+        .populate('createdBy', 'name')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(Number(limit))
+        .lean(),
+      this.procedureModel.countDocuments(filter),
+    ]);
+
     return {
       message: 'Success',
       data,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / Number(limit)),
+      },
     };
   }
 

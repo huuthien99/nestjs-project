@@ -6,19 +6,21 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { ProcedureService } from './procedure.service';
 import { ProcedureDto } from './dto/procedure.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { QueryProcedureDto } from './dto/query.dto';
 
 @Controller('procedure')
 export class ProcedureController {
   constructor(private readonly procedureService: ProcedureService) {}
   @Get()
-  getAll() {
-    return this.procedureService.getAll();
+  getAll(@Query() query: QueryProcedureDto) {
+    return this.procedureService.getAll(query);
   }
 
   @UseGuards(JwtAuthGuard)
