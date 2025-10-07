@@ -25,7 +25,7 @@ export class ProcedureService {
       filter.name = { $regex: search, $options: 'i' };
     }
 
-    if (type) {
+    if (type && type !== 'all') {
       filter.type = type;
     }
 
