@@ -33,13 +33,7 @@ export class FlowService {
         pieces.push(compiled);
       }
 
-      const fullScript = `
-        try {
-          ${pieces.join('\n')}
-        } catch (err) {
-          console.error("Flow runtime error:", err);
-        }
-      `;
+      const fullScript = `${pieces.join('\n')}`;
 
       await runSandbox(fullScript);
       return { success: 'Runner' };
