@@ -1,1 +1,4 @@
-console.log("🌐 Navigating to:", "{{data.url}}"); await page.goto("{{data.url}}");
+
+await page.goto("{{data.url}}", { waitUntil: "{{data.typeLoad}}", timeout:
+{{timeoutValue data.timeWait}}
+});

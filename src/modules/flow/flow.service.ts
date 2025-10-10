@@ -5,6 +5,11 @@ import { runSandbox } from 'src/utils/sanbox'; // giữ nguyên nếu file của
 
 Handlebars.registerHelper('eq', (a, b) => a === b);
 
+Handlebars.registerHelper('timeoutValue', (timeWait) => {
+  const t = Number(timeWait);
+  return t === 0 ? 30000 : t * 1000;
+});
+
 function loadTemplate(keyword: string) {
   const path = `src/modules/flow/templates/${keyword}.hbs`;
   if (!fs.existsSync(path)) return null;
@@ -33,10 +38,15 @@ export class FlowService {
         pieces.push(compiled);
       }
 
-      const fullScript = `${pieces.join('\n')}`;
+      const fullScript = pieces.join('\n');
 
-      await runSandbox(fullScript);
-      return { success: 'Runner' };
+      // await runSandbox(fullScript);
+
+      const result = await runSandbox(fullScript);
+      if (!result.success) {
+        return { status: 'error', message: result.error };
+      }
+      return { status: 'success', message: 'Flow executed successfully' };
     } catch (error: any) {
       throw new BadRequestException(
         error?.message || 'Error creating procedure',

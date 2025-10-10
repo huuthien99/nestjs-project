@@ -32,9 +32,11 @@ export async function runSandbox(script: string) {
     const result = vm.run(wrappedScript, 'vm.js');
 
     await result;
+    return { success: true };
   } catch (err) {
     console.error('VM error:', err);
+    return { success: false, error: err.message };
   } finally {
-    await browser.close();
+    // await browser.close();
   }
 }

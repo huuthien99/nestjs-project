@@ -1,0 +1,16 @@
+try { const selectorType = "{{data.selectorType}}"; const elementSelector = "{{data.elementSelector}}";
+const textToType = "{{data.text}}"; const delayTime =
+{{data.time}}
+* 1000; let elementHandle; if (selectorType === "xpath") { elementHandle = await
+page.waitForSelector(`::-p-xpath(${elementSelector})`); if (!elementHandle)
+throw new Error(`Không tìm thấy element với xpath: ${elementSelector}`); } else
+if (selectorType === "css") { elementHandle = await
+page.waitForSelector(elementSelector); if (!elementHandle) throw new
+Error(`Không tìm thấy element với css: ${elementSelector}`); } else { throw new
+Error(`Selector type không hợp lệ: ${selectorType}`); } const tagName = await
+elementHandle.evaluate(el => el.tagName.toLowerCase()); if (tagName === 'input'
+|| tagName === 'textarea') { await elementHandle.type(textToType, { delay:
+delayTime }); } else if (tagName === 'select') { await
+elementHandle.select(textToType); } else { console.warn(`Element tag ${tagName}
+không hỗ trợ typing/select: ${elementSelector}`); } } catch (err) {
+console.error("TYPING_TEXT error:", err); throw err; }

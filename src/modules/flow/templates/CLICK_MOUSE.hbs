@@ -1,0 +1,11 @@
+{{! CLICK_MOUSE.hbs }}
+try { const selectorType = "{{data.selectorType}}"; const elementSelector = "{{data.elementSelector}}";
+const pushBtn = "{{data.pushBtn}}" || 'left'; const selectType = "{{data.selectType}}"
+|| 'selector'; let elementHandle; if (selectType === 'selector') { if
+(selectorType === 'xpath') { elementHandle = await
+page.waitForSelector(`::-p-xpath(${elementSelector})`); } else if (selectorType
+=== 'css') { elementHandle = await page.waitForSelector(elementSelector); } else
+{ throw new Error(`Selector type không hợp lệ: ${selectorType}`); } if
+(!elementHandle) { throw new Error(`Không tìm thấy element để click:
+${elementSelector}`); } } await elementHandle.click(); } catch (err) {
+console.error('CLICK_MOUSE error:', err); throw err; }
