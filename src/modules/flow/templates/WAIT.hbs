@@ -1,0 +1,12 @@
+const delay =
+{{#if (eq data.typeWait 'random')}}
+  Math.floor(Math.random() * ({{data.timeWaitTo}}
+  -
+  {{data.timeWaitFrom}}
+  + 1)) +
+  {{data.timeWaitFrom}}
+{{else}}
+  {{data.timeWaitFrom}}
+{{/if}}; console.log(`⏳ Waiting
+{{data.typeWait}}: ${delay}s`); await new Promise((resolve) =>
+setTimeout(resolve, delay * 1000));

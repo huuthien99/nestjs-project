@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProcedureModule } from './modules/procedure/procedure.module';
+import { FlowModule } from './modules/flow/flow.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ProcedureModule } from './modules/procedure/procedure.module';
     UsersModule,
     AuthModule,
     ProcedureModule,
+    FlowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
