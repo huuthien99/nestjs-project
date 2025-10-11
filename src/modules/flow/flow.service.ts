@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import Handlebars from 'handlebars';
 import * as fs from 'fs';
-import { runSandbox } from 'src/utils/sanbox'; // giữ nguyên nếu file của bạn tên "sanbox"
+import { runSandbox } from 'src/utils/sanbox';
 
 Handlebars.registerHelper('eq', (a, b) => a === b);
 
